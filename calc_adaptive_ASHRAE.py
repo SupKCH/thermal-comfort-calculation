@@ -4,12 +4,9 @@ from pythermalcomfort.utilities import running_mean_outdoor_temperature
 from flask import Flask, request
 
 app = Flask(__name__)
-books = []
 @app.route('/', methods=['POST', 'GET'])
 def cal():
   if request.method == 'POST':
-    body = request.get_json()
-    books.append(body)
     
     #rmt_value = running_mean_outdoor_temperature([29, 28, 30, 29, 28, 30, 27], alpha=0.9)
     #result = adaptive_ashrae(tdb=25, tr=25, t_running_mean=rmt_value, v=0.3)
@@ -34,5 +31,4 @@ def cal():
   elif request.method == 'GET':
     rmt_value = running_mean_outdoor_temperature([29, 28, 30, 29, 28, 30, 27], alpha=0.9)
     result = adaptive_ashrae(tdb=25, tr=25, t_running_mean=rmt_value, v=0.3)
-    #return { "books": books }, 200
     return  result, 200
