@@ -27,7 +27,7 @@ def cal():
     #    'tr': request.json['tr']
     #}
     
-    return jsonify({'task': task}), 201
+    return {'task': task}, 201
   elif request.method == 'GET':
     rmt_value = running_mean_outdoor_temperature([29, 28, 30, 29, 28, 30, 27], alpha=0.9)
     result = adaptive_ashrae(tdb=25, tr=25, t_running_mean=rmt_value, v=0.3)
