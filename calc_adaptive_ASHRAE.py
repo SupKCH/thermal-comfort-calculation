@@ -20,16 +20,20 @@ def cal():
     #    'done': False
     #}
     
-    if not request.json or not 'title' in request.json or not 'tdb' in request.json or not 'tr' in request.json:
+    if not request.json or not 'title' in request.json or not 'tdb' in request.json or not 'tr' in request.json or not 'tod_list' in request.json or not 'v' in request.json:
         abort(400)
     task = {
-        'title': request.json['title'],
-        'tdb': request.json['tdb'],
-        'tr': request.json['tr']
+      'title': request.json['title'],
+      'tdb': request.json['tdb'],
+      'tr': request.json['tr']
+      'tod_list': request.json['tod_list']
+      'alpha': request.json['alpha']
+      'v': request.json['v']
     }
-    
     return task, 201
+  
   elif request.method == 'GET':
-    rmt_value = running_mean_outdoor_temperature([29, 28, 30, 29, 28, 30, 27], alpha=0.9)
-    result = adaptive_ashrae(tdb=25, tr=25, t_running_mean=rmt_value, v=0.3)
+    #rmt_value = running_mean_outdoor_temperature([29, 28, 30, 29, 28, 30, 27], alpha=0.9)
+    #result = adaptive_ashrae(tdb=25, tr=25, t_running_mean=rmt_value, v=0.3)
+    result = 'Hey!, this is GET request. I want POST request'
     return  result, 200
