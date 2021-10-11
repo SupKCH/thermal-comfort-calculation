@@ -30,10 +30,12 @@ def cal():
       'alpha': request.json['alpha'],
       'v': request.json['v']
     }
-    return task, 201
+    rmt_value = running_mean_outdoor_temperature(task['tod_list'], alpha=task['alpha'])
+    result = adaptive_ashrae(tdb=task['tdb'], tr=task['tr'], t_running_mean=rmt_value, v=task['v'])
+    return {'task': task, 'result': result}, 201
   
   elif request.method == 'GET':
     #rmt_value = running_mean_outdoor_temperature([29, 28, 30, 29, 28, 30, 27], alpha=0.9)
     #result = adaptive_ashrae(tdb=25, tr=25, t_running_mean=rmt_value, v=0.3)
-    result = 'Hey!, this is GET request. I want POST request'
-    return  result, 200
+    message = 'Hey!, this is GET request. I want POST request'
+    return  message, 200
