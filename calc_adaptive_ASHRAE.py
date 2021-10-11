@@ -25,9 +25,9 @@ def cal():
     task = {
       'title': request.json['title'],
       'tdb': request.json['tdb'],
-      'tr': request.json['tr']
-      'tod_list': request.json['tod_list']
-      'alpha': request.json['alpha']
+      'tr': request.json['tr'],
+      'tod_list': request.json['tod_list'],
+      'alpha': request.json['alpha'],
       'v': request.json['v']
     }
     return task, 201
