@@ -32,9 +32,11 @@ def cal():
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
-    for t in range(35,15,0.5):
-        result = pmv_ppd(tdb=t, tr=tr, vr=vr, rh=43.4, met=met, clo=clo, standard="ASHRAE")
+    t = 35
+    while True:
+        result = pmv_ppd(tdb=t, tr=tr, vr=vr, rh=70, met=met, clo=clo, standard="ASHRAE")
         if result['pmv'] <= 0.5:
             break
+        t -= 0.5
     #result = pmv_ppd(tdb=31, tr=tr, vr=vr, rh=43.4, met=1.1, clo=0.38, standard="ASHRAE")
-    return  {'tdb': t, 'result': result}, 200
+    return  {'tdb': t, 'rh' : 70, 'result': result}, 200
