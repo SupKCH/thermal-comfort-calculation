@@ -21,7 +21,7 @@ app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET'])
 def cal():
   if request.method == 'POST':
-    if not request.json or not 'tdb' in request.json or not 'rh' in request.json:
+    if not 'tdb' in request.json or not 'rh' in request.json:
         abort(400)
     task = {
       'tdb': request.json['tdb'],
