@@ -1,1 +1,1 @@
-web: gunicorn calc_adaptive_ASHRAE:app --log-file -
+web: gunicorn calc_pmv_ppd_heroku:app --log-file -
