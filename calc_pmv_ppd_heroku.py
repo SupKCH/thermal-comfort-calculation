@@ -31,5 +31,6 @@ def cal():
     return result, 201
   
   elif request.method == 'GET':
-    message = 'Hey!, this is GET request. I want POST request'
-    return  message, 200
+    #message = 'Hey!, this is GET request. I want POST request'
+    results = pmv_ppd(tdb=27, tr=tr, vr=vr, rh=70, met=met, clo=clo, standard="ASHRAE")
+    return  result, 200
