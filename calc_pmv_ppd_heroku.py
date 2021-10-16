@@ -21,7 +21,7 @@ app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET'])
 def cal():
   if request.method == 'POST':
-    if not 'tdb' in request.json or not 'rh' in request.json:
+    if not request.json or not 'tdb' in request.json or not 'rh' in request.json:
         abort(400)
     task = {
       'tdb': request.json['tdb'],
@@ -32,5 +32,5 @@ def cal():
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
-    results = pmv_ppd(tdb=27, tr=tr, vr=vr, rh=70, met=met, clo=clo, standard="ASHRAE")
+    results = pmv_ppd(tdb=31, tr=tr, vr=vr, rh=43.4, met=met, clo=clo, standard="ASHRAE")
     return  result, 200
