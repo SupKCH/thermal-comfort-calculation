@@ -26,9 +26,15 @@ def cal():
     task = {
       'tdb': request.json['tdb'],
       'rh': request.json['rh'],
-    }    
-    result = pmv_ppd(tdb=task['tdb'], tr=tr, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
-    return result, 201
+    }
+    t = 35
+    while True:
+        result = pmv_ppd(tdb=t, tr=tr, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
+        if result['pmv'] <= 0.5:
+            break
+        t -= 0.5
+    room_result = pmv_ppd(tdb=task['tdb'], tr=tr, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
+    return {'tdb': task['tdb'], 'rh': task['rh'], 'room_result': room_result, 'result': result}, 201
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
@@ -38,5 +44,4 @@ def cal():
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
-    #result = pmv_ppd(tdb=31, tr=tr, vr=vr, rh=43.4, met=1.1, clo=0.38, standard="ASHRAE")
-    return  {'tdb': t, 'rh' : 70, 'result': result}, 200
+    return  {'tdb': t, 'rh': 70, 'result': result}, 200
