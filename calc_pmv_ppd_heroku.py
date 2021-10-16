@@ -27,10 +27,10 @@ def cal():
       'tdb': request.json['tdb'],
       'rh': request.json['rh'],
     }    
-    results = pmv_ppd(tdb=task['tdb'], tr=tr, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
+    result = pmv_ppd(tdb=task['tdb'], tr=tr, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
     return result, 201
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
-    results = pmv_ppd(tdb=31, tr=tr, vr=vr, rh=43.4, met=1.1, clo=0.38, standard="ASHRAE")
+    result = pmv_ppd(tdb=31, tr=tr, vr=vr, rh=43.4, met=1.1, clo=0.38, standard="ASHRAE")
     return  result, 200
