@@ -34,7 +34,7 @@ def cal():
             break
         t -= 0.5
     room_result = pmv_ppd(tdb=task['tdb'], tr=tr, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
-    return {'tdb': task['tdb'], 'rh': task['rh'], 'room_result': room_result, 'result': result}, 201
+    return {'tdb': task['tdb'], 'rh': task['rh'], 't': t, 'room_result': room_result, 'result': result}, 201
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
