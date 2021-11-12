@@ -3,6 +3,24 @@ from pythermalcomfort.utilities import v_relative, clo_dynamic
 from pythermalcomfort.utilities import met_typical_tasks
 from pythermalcomfort.utilities import clo_individual_garments
 from flask import Flask, request
+from datetime import datetime
+
+
+
+## MRT curve fitting
+a = -0.07961
+b = 2.20962
+c = 11.25989
+
+#x = 14
+y = a*x**2 + b*x + c
+
+## look-up table
+setting_table = {23: 26.0, 
+                 24: 26.5, 
+                 25: 27.0, 
+                 26: 28.0, 
+                 27: 29.0}
 
 #tdb = 27
 tr = 25
@@ -38,10 +56,13 @@ def cal():
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    #print("Current Time =", current_time)
     t = 35
     while True:
         result = pmv_ppd(tdb=t, tr=tr, vr=vr, rh=70, met=met, clo=clo, standard="ASHRAE")
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
-    return  {'tdb': t, 'rh': 70, 'result': result}, 200
+    return  {'tdb': t, 'rh': 70, 'result': result, 'time': current_time}, 200
