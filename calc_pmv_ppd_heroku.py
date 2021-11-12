@@ -11,7 +11,7 @@ a = -0.07961
 b = 2.20962
 c = 11.25989
 
-#x = 14
+x = 14
 y = a*x**2 + b*x + c
 
 ## look-up table
@@ -55,8 +55,8 @@ def cal():
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
-    #now = datetime.now()
-    #current_time = now.strftime("%H:%M:%S")
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
     #print("Current Time =", current_time)
     t = 35
     while True:
@@ -64,4 +64,4 @@ def cal():
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
-    return  {'tdb': t, 'rh': 70, 'result': result}, 200
+    return  {'tdb': t, 'rh': 70, 'result': result, 'time': current_time}, 200
