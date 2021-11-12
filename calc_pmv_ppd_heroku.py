@@ -3,7 +3,7 @@ from pythermalcomfort.utilities import v_relative, clo_dynamic
 from pythermalcomfort.utilities import met_typical_tasks
 from pythermalcomfort.utilities import clo_individual_garments
 from flask import Flask, request
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 ## MRT curve fitting
