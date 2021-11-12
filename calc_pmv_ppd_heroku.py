@@ -53,8 +53,13 @@ def cal():
         if result['pmv'] <= 0.5:
             break
         t -= 0.1
+    for key, value in lookup_table.items():
+        if t >= value:
+            selected_t = key
+        else:
+            break
     room_result = pmv_ppd(tdb=task['tdb'], tr=fit_MRT, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
-    return {'tdb': task['tdb'], 'rh': task['rh'], 't': t, 'room_result': room_result, 'result': result, 'fit_MRT': fit_MRT}, 201  ## remove mrt in real case
+    return {'tdb': task['tdb'], 'rh': task['rh'], 'suggested_tdb': t, 'room_result': room_result, 'iterated_result': result, 'fit_MRT': fit_MRT, 'selected_t': selected_t}, 201  ## remove mrt/suggested_tdb in real case or update JSON size
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
