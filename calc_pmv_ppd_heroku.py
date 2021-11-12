@@ -71,4 +71,4 @@ def cal():
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
-    return  {'tdb': t, 'rh': 70, 'result': result, 'time': current_time, 'fit_MRT': fit_MRT}, 200
+    return  {'suggested_tdb': t, 'rh': 70, 'result': result, 'time': current_time, 'fit_MRT': fit_MRT}, 200
