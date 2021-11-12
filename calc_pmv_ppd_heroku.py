@@ -49,7 +49,7 @@ def cal():
     deci_hours = hours + minutes/60 + seconds/3600
     MRT = a*deci_hours**2 + b*deci_hours + c
     while True:
-        result = pmv_ppd(tdb=t, tr=MRT, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
+        result = pmv_ppd(tdb=t, tr=tr, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
@@ -59,6 +59,7 @@ def cal():
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
     now = datetime.now() + timedelta(hours=7)
+    current_time = now.strftime("%H:%M:%S")
     hours = now.hour
     minutes = now.minute
     seconds = now.second
@@ -70,4 +71,4 @@ def cal():
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
-    return  {'tdb': t, 'rh': 70, 'result': result, 'MRT': MRT, 'time': current_time}, 200
+    return  {'tdb': t, 'rh': 70, 'result': result, 'time': current_time}, 200
