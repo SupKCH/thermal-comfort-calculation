@@ -67,7 +67,7 @@ def cal():
     fit_MRT = a*deci_hours**2 + b*deci_hours + c
     t = 35
     while True:
-        result = pmv_ppd(tdb=t, tr=tr, vr=vr, rh=70, met=met, clo=clo, standard="ASHRAE")
+        result = pmv_ppd(tdb=t, tr=fit_MRT, vr=vr, rh=70, met=met, clo=clo, standard="ASHRAE")
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
