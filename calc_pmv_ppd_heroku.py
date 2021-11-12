@@ -11,9 +11,6 @@ a = -0.07961
 b = 2.20962
 c = 11.25989
 
-x = 14
-y = a*x**2 + b*x + c
-
 ## look-up table
 setting_table = {23: 26.0, 
                  24: 26.5, 
@@ -45,8 +42,14 @@ def cal():
       'rh': request.json['rh'],
     }
     t = 35
+    now = datetime.now() + timedelta(hours=7)
+    hours = now.hour
+    minutes = now.minute
+    seconds = now.second
+    deci_hours = hours + minutes/60 + seconds/3600
+    MRT = a*deci_hours**2 + b*deci_hours + c
     while True:
-        result = pmv_ppd(tdb=t, tr=tr, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
+        result = pmv_ppd(tdb=t, tr=MRT, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
@@ -55,13 +58,16 @@ def cal():
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
-    now = datetime.now() + timedelta(hours=7)   ## complier is at UTC+0
-    current_time = now.strftime("%H:%M:%S")
-    #print("Current Time =", current_time)
+    now = datetime.now() + timedelta(hours=7)
+    hours = now.hour
+    minutes = now.minute
+    seconds = now.second
+    deci_hours = hours + minutes/60 + seconds/3600
+    MRT = a*deci_hours**2 + b*deci_hours + c
     t = 35
     while True:
         result = pmv_ppd(tdb=t, tr=tr, vr=vr, rh=70, met=met, clo=clo, standard="ASHRAE")
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
-    return  {'tdb': t, 'rh': 70, 'result': result, 'time': current_time}, 200
+    return  {'tdb': t, 'rh': 70, 'result': result, 'MRT': MRT, 'time': current_time}, 200
