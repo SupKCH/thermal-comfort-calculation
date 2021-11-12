@@ -55,7 +55,7 @@ def cal():
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
-    now = datetime.now()
+    now = datetime.now() + timedelta(hours=7)   ## complier is at UTC+0
     current_time = now.strftime("%H:%M:%S")
     #print("Current Time =", current_time)
     t = 35
