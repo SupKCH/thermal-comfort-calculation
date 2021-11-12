@@ -19,7 +19,7 @@ setting_table = {23: 26.0,
                  27: 29.0}
 
 #tdb = 27
-tr = 25
+tr = 26
 v = 0.1
 #rh = 50
 activity = "Typing"
@@ -47,14 +47,14 @@ def cal():
     minutes = now.minute
     seconds = now.second
     deci_hours = hours + minutes/60 + seconds/3600
-    MRT = a*deci_hours**2 + b*deci_hours + c
+    fit_MRT = a*deci_hours**2 + b*deci_hours + c
     while True:
-        result = pmv_ppd(tdb=t, tr=tr, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
+        result = pmv_ppd(tdb=t, tr=fit_MRT, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
-    room_result = pmv_ppd(tdb=task['tdb'], tr=tr, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
-    return {'tdb': task['tdb'], 'rh': task['rh'], 't': t, 'room_result': room_result, 'result': result}, 201
+    room_result = pmv_ppd(tdb=task['tdb'], tr=fit_MRT, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
+    return {'tdb': task['tdb'], 'rh': task['rh'], 't': t, 'room_result': room_result, 'result': result, 'fit_MRT': fit_MRT}, 201  ## remove mrt in real case
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
@@ -64,11 +64,11 @@ def cal():
     minutes = now.minute
     seconds = now.second
     deci_hours = hours + minutes/60 + seconds/3600
-    MRT = a*deci_hours**2 + b*deci_hours + c
+    fit_MRT = a*deci_hours**2 + b*deci_hours + c
     t = 35
     while True:
         result = pmv_ppd(tdb=t, tr=tr, vr=vr, rh=70, met=met, clo=clo, standard="ASHRAE")
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
-    return  {'tdb': t, 'rh': 70, 'result': result, 'time': current_time}, 200
+    return  {'tdb': t, 'rh': 70, 'result': result, 'time': current_time, 'fit_MRT': fit_MRT}, 200
