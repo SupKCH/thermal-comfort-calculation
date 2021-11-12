@@ -6,7 +6,6 @@ from flask import Flask, request
 from datetime import datetime
 
 
-
 ## MRT curve fitting
 a = -0.07961
 b = 2.20962
@@ -56,8 +55,8 @@ def cal():
   
   elif request.method == 'GET':
     #message = 'Hey!, this is GET request. I want POST request'
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
+    #now = datetime.now()
+    #current_time = now.strftime("%H:%M:%S")
     #print("Current Time =", current_time)
     t = 35
     while True:
@@ -65,4 +64,4 @@ def cal():
         if result['pmv'] <= 0.5:
             break
         t -= 0.5
-    return  {'tdb': t, 'rh': 70, 'result': result, 'time': current_time}, 200
+    return  {'tdb': t, 'rh': 70, 'result': result}, 200
