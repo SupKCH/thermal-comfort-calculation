@@ -12,7 +12,7 @@ b = 2.20962
 c = 11.25989
 
 ## look-up table
-setting_table = {23: 26.0, 
+lookup_table = {23: 26.0, 
                  24: 26.5, 
                  25: 27.0, 
                  26: 28.0, 
@@ -71,4 +71,9 @@ def cal():
         if result['pmv'] <= 0.5:
             break
         t -= 0.1
-    return  {'suggested_tdb': t, 'rh': 70, 'result': result, 'time': current_time, 'fit_MRT': fit_MRT}, 200
+    for key, value in lookup_table.items():
+        if t >= value:
+            selected_t = key
+        else:
+            break
+    return  {'suggested_tdb': t, 'rh': 70, 'result': result, 'time': current_time, 'fit_MRT': fit_MRT, 'selected_t': selected_t}, 200
