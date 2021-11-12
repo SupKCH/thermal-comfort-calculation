@@ -52,7 +52,7 @@ def cal():
         result = pmv_ppd(tdb=t, tr=fit_MRT, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
         if result['pmv'] <= 0.5:
             break
-        t -= 0.5
+        t -= 0.1
     room_result = pmv_ppd(tdb=task['tdb'], tr=fit_MRT, vr=vr, rh=task['rh'], met=met, clo=clo, standard="ASHRAE")
     return {'tdb': task['tdb'], 'rh': task['rh'], 't': t, 'room_result': room_result, 'result': result, 'fit_MRT': fit_MRT}, 201  ## remove mrt in real case
   
@@ -70,5 +70,5 @@ def cal():
         result = pmv_ppd(tdb=t, tr=fit_MRT, vr=vr, rh=70, met=met, clo=clo, standard="ASHRAE")
         if result['pmv'] <= 0.5:
             break
-        t -= 0.5
+        t -= 0.1
     return  {'suggested_tdb': t, 'rh': 70, 'result': result, 'time': current_time, 'fit_MRT': fit_MRT}, 200
