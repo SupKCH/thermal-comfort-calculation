@@ -7,20 +7,20 @@ from datetime import datetime, timedelta
 
 
 ## MRT curve fitting
-a = -0.07961
-b = 2.20962
-c = 11.25989
+a = -0.03150
+b = 1.03541
+c = 18.41451
 
 ## look-up table
-lookup_table = {23: 26.0, 
-                 24: 26.5, 
-                 25: 27.0, 
-                 26: 28.0, 
-                 27: 29.0}
+lookup_table = {23: 26.04044586, 
+                 24: 26.81464088, 
+                 25: 27.43148148, 
+                 26: 28.09216867, 
+                 27: 28.64818226}
 
 #tdb = 27
-tr = 26
-v = 0.1
+#tr = 26
+v = 0.2
 #rh = 50
 activity = "Typing"
 garments = ["Sweatpants", "T-shirt", "Shoes or sandals"]
