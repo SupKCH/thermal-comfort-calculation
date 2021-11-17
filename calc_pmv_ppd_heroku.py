@@ -7,9 +7,9 @@ from datetime import datetime, timedelta
 
 
 ## MRT curve fitting
-a = -0.03150
-b = 1.03541
-c = 18.41451
+a = -0.0391888
+b = 1.2675646
+c = 16.9690554
 
 ## look-up table
 lookup_table = {23: 26.04044586, 
