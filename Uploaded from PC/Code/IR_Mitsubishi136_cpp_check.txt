@@ -1,0 +1,72 @@
+/// Set the requested power state of the A/C to on.
+void IRMitsubishi136::on(void) { setPower(true); }
+
+/// Set the requested power state of the A/C to off.
+void IRMitsubishi136::off(void) { setPower(false); }
+
+/// Set the temperature.
+/// @param[in] degrees The temperature in degrees celsius.
+void IRMitsubishi136::setTemp(const uint8_t degrees) {
+  uint8_t temp = std::max((uint8_t)kMitsubishi136MinTemp, degrees);
+  temp = std::min((uint8_t)kMitsubishi136MaxTemp, temp);
+  _.Temp = temp - kMitsubishiAcMinTemp;
+}
+
+/// Set the speed of the fan.
+/// @param[in] speed The desired setting.
+void IRMitsubishi136::setFan(const uint8_t speed) {
+  _.Fan = std::min(speed, kMitsubishi136FanMax);
+}
+
+/// Set the operating mode of the A/C.
+/// @param[in] mode The desired operating mode.
+void IRMitsubishi136::setMode(const uint8_t mode) {
+  // If we get an unexpected mode, default to AUTO.
+  switch (mode) {
+    case kMitsubishi136Fan:
+    case kMitsubishi136Cool:
+    case kMitsubishi136Heat:
+    case kMitsubishi136Auto:
+    case kMitsubishi136Dry:
+      _.Mode = mode;
+      break;
+    default:
+      _.Mode = kMitsubishi136Auto;
+  }
+}
+
+/// Set the Vertical Swing mode of the A/C.
+/// @param[in] position The position/mode to set the swing to.
+void IRMitsubishi136::setSwingV(const uint8_t position) {
+  // If we get an unexpected mode, default to auto.
+  switch (position) {
+    case kMitsubishi136SwingVLowest:
+    case kMitsubishi136SwingVLow:
+    case kMitsubishi136SwingVHigh:
+    case kMitsubishi136SwingVHighest:
+    case kMitsubishi136SwingVAuto:
+      _.SwingV = position;
+      break;
+    default:
+      _.SwingV = kMitsubishi136SwingVAuto;
+  }
+}
+
+const uint8_t kMitsubishi136PowerByte = 5;
+const uint8_t kMitsubishi136MinTemp = 17;  // 17C
+const uint8_t kMitsubishi136MaxTemp = 30;  // 30C
+const uint8_t kMitsubishi136Fan =             0b000;
+const uint8_t kMitsubishi136Cool =            0b001;
+const uint8_t kMitsubishi136Heat =            0b010;
+const uint8_t kMitsubishi136Auto =            0b011;
+const uint8_t kMitsubishi136Dry =             0b101;
+const uint8_t kMitsubishi136SwingVLowest =   0b0000;
+const uint8_t kMitsubishi136SwingVLow =      0b0001;
+const uint8_t kMitsubishi136SwingVHigh =     0b0010;
+const uint8_t kMitsubishi136SwingVHighest =  0b0011;
+const uint8_t kMitsubishi136SwingVAuto =     0b1100;
+const uint8_t kMitsubishi136FanMin =          0b00;
+const uint8_t kMitsubishi136FanLow =          0b01;
+const uint8_t kMitsubishi136FanMed =          0b10;
+const uint8_t kMitsubishi136FanMax =          0b11;
+const uint8_t kMitsubishi136FanQuiet = kMitsubishi136FanMin;

@@ -1,0 +1,111 @@
+/// Set the requested power state of the A/C to on.
+void IRMitsubishiHeavy88Ac::on(void) { setPower(true); }
+
+/// Set the requested power state of the A/C to off.
+void IRMitsubishiHeavy88Ac::off(void) { setPower(false); }
+
+/// Set the temperature.
+/// @param[in] temp The temperature in degrees celsius.
+void IRMitsubishiHeavy88Ac::setTemp(const uint8_t temp) {
+  uint8_t newtemp = temp;
+  newtemp = std::min(newtemp, kMitsubishiHeavyMaxTemp);
+  newtemp = std::max(newtemp, kMitsubishiHeavyMinTemp);
+  _.Temp = newtemp - kMitsubishiHeavyMinTemp;
+}
+
+/// Set the speed of the fan.
+/// @param[in] speed The desired setting.
+void IRMitsubishiHeavy88Ac::setFan(const uint8_t speed) {
+  uint8_t newspeed = speed;
+  switch (speed) {
+    case kMitsubishiHeavy88FanLow:
+    case kMitsubishiHeavy88FanMed:
+    case kMitsubishiHeavy88FanHigh:
+    case kMitsubishiHeavy88FanTurbo:
+    case kMitsubishiHeavy88FanEcono: break;
+    default: newspeed = kMitsubishiHeavy88FanAuto;
+  }
+  _.Fan = newspeed;
+}
+
+/// Set the operating mode of the A/C.
+/// @param[in] mode The desired operating mode.
+void IRMitsubishiHeavy88Ac::setMode(const uint8_t mode) {
+  uint8_t newmode = mode;
+  switch (mode) {
+    case kMitsubishiHeavyCool:
+    case kMitsubishiHeavyDry:
+    case kMitsubishiHeavyFan:
+    case kMitsubishiHeavyHeat:
+      break;
+    default:
+      newmode = kMitsubishiHeavyAuto;
+  }
+  _.Mode = newmode;
+}
+
+/// Set the Vertical Swing mode of the A/C.
+/// @param[in] pos The position/mode to set the swing to.
+void IRMitsubishiHeavy88Ac::setSwingVertical(const uint8_t pos) {
+  uint8_t newpos;
+  switch (pos) {
+    case kMitsubishiHeavy88SwingVAuto:
+    case kMitsubishiHeavy88SwingVHighest:
+    case kMitsubishiHeavy88SwingVHigh:
+    case kMitsubishiHeavy88SwingVMiddle:
+    case kMitsubishiHeavy88SwingVLow:
+    case kMitsubishiHeavy88SwingVLowest: newpos = pos; break;
+    default: newpos = kMitsubishiHeavy88SwingVOff;
+  }
+  _.SwingV5 = newpos;
+  _.SwingV7 = (newpos >> kMitsubishiHeavy88SwingVByte5Size);
+}
+
+/// Set the Horizontal Swing mode of the A/C.
+/// @param[in] pos The position/mode to set the swing to.
+void IRMitsubishiHeavy88Ac::setSwingHorizontal(const uint8_t pos) {
+  uint8_t newpos;
+  switch (pos) {
+    case kMitsubishiHeavy88SwingHAuto:
+    case kMitsubishiHeavy88SwingHLeftMax:
+    case kMitsubishiHeavy88SwingHLeft:
+    case kMitsubishiHeavy88SwingHMiddle:
+    case kMitsubishiHeavy88SwingHRight:
+    case kMitsubishiHeavy88SwingHRightMax:
+    case kMitsubishiHeavy88SwingHLeftRight:
+    case kMitsubishiHeavy88SwingHRightLeft:
+    case kMitsubishiHeavy88SwingH3D: newpos = pos; break;
+    default:                         newpos = kMitsubishiHeavy88SwingHOff;
+  }
+  _.SwingH1 = newpos;
+  _.SwingH2 = (newpos >> kMitsubishiHeavy88SwingHSize);
+}
+
+const uint8_t kMitsubishiHeavy88SwingHSize = 2;  // Bits (per offset)
+const uint8_t kMitsubishiHeavy88SwingHOff =       0b0000;
+const uint8_t kMitsubishiHeavy88SwingHAuto =      0b1000;
+const uint8_t kMitsubishiHeavy88SwingHLeftMax =   0b0001;
+const uint8_t kMitsubishiHeavy88SwingHLeft =      0b0101;
+const uint8_t kMitsubishiHeavy88SwingHMiddle =    0b1001;
+const uint8_t kMitsubishiHeavy88SwingHRight =     0b1101;
+const uint8_t kMitsubishiHeavy88SwingHRightMax =  0b0010;
+const uint8_t kMitsubishiHeavy88SwingHRightLeft = 0b1010;
+const uint8_t kMitsubishiHeavy88SwingHLeftRight = 0b0110;
+const uint8_t kMitsubishiHeavy88SwingH3D =        0b1110;
+
+const uint8_t kMitsubishiHeavy88FanAuto =  0;  // 0b000
+const uint8_t kMitsubishiHeavy88FanLow =   2;  // 0b010
+const uint8_t kMitsubishiHeavy88FanMed =   3;  // 0b011
+const uint8_t kMitsubishiHeavy88FanHigh =  4;  // 0b100
+const uint8_t kMitsubishiHeavy88FanTurbo = 6;  // 0b110
+const uint8_t kMitsubishiHeavy88FanEcono = 7;  // 0b111
+const uint8_t kMitsubishiHeavy88SwingVByte5Size = 1;
+
+                                          // Mask 0b111
+const uint8_t kMitsubishiHeavy88SwingVOff =       0b000;  // 0
+const uint8_t kMitsubishiHeavy88SwingVAuto =      0b100;  // 4
+const uint8_t kMitsubishiHeavy88SwingVHighest =   0b110;  // 6
+const uint8_t kMitsubishiHeavy88SwingVHigh =      0b001;  // 1
+const uint8_t kMitsubishiHeavy88SwingVMiddle =    0b011;  // 3
+const uint8_t kMitsubishiHeavy88SwingVLow =       0b101;  // 5
+const uint8_t kMitsubishiHeavy88SwingVLowest =    0b111;  // 7

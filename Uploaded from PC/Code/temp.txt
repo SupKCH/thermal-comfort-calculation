@@ -1,0 +1,56 @@
+{
+  "title": "Hello there",
+  "tdb": 26.2,
+  "tr": 30.7,
+  "tod_list": [
+    30.2,
+    33.1,
+    32.8
+  ],
+  "alpha": 0.9,
+  "v": 0.3
+}
+
+{
+  "result": {
+    "acceptability_80": true,
+    "acceptability_90": true,
+    "tmp_cmf": 27.689,
+    "tmp_cmf_80_low": 24.189,
+    "tmp_cmf_80_up": 31.189,
+    "tmp_cmf_90_low": 25.189,
+    "tmp_cmf_90_up": 30.189
+  },
+  "task": {
+    "alpha": 0.9,
+    "tdb": 29.7,
+    "title": "Hello there",
+    "tod_list": [
+      30.2,
+      33.1,
+      32.8
+    ],
+    "tr": 30.7,
+    "v": 0.3
+  }
+}
+
+{
+  "result": {
+    "pmv": 0.47,
+    "ppd": 9.7
+  },
+  "room_result": {
+    "pmv": 0.47,
+    "ppd": 9.7
+  },
+  "tdb": 30.7,
+  "rh": 0.3,
+  "t": 0.3
+}
+
+
+// Enough space for:
+// + 1 object with 3 members
+// + 2 objects with 1 member
+const int capacity = JSON_OBJECT_SIZE(3) + 2 * JSON_OBJECT_SIZE(1);
